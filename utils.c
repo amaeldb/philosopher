@@ -6,7 +6,7 @@
 /*   By: ade-beta <ade-beta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:38:33 by ade-beta          #+#    #+#             */
-/*   Updated: 2022/07/07 21:05:41 by ade-beta         ###   ########.fr       */
+/*   Updated: 2022/07/21 13:43:40 by ade-beta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,22 @@ long long	get_time(t_set *s)
 
 void	prnt(t_set *s, int id, char *str)
 {
+	if (s->dead && str[4] != 'd')
+		return ;
 	pthread_mutex_lock(&s->prnt);
 	printf("%lld %d %s\n", (get_time(s) - s->start), id, str);
 	pthread_mutex_unlock(&s->prnt);
+}
+
+void	slp(t_set *s, int r)
+{
+	long long	i;
+
+	i = get_time(s);
+	while (1)
+	{
+		if (get_time(s) - i >= s->rules[r])
+			return ;
+		usleep(50);
+	}
 }

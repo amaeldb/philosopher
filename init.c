@@ -6,7 +6,7 @@
 /*   By: ade-beta <ade-beta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:26:23 by ade-beta          #+#    #+#             */
-/*   Updated: 2022/07/07 20:38:21 by ade-beta         ###   ########.fr       */
+/*   Updated: 2022/07/22 11:54:10 by ade-beta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_philo(t_philo *p, int i, t_set *s)
 	p->eat_count = 0;
 	p->s = s;
 	p->lf = i;
-	if ((i + 1) == s->rules[0])
+	if ((i + 1) == s->rules[0] || s->rules[0] == 1)
 		p->rf = 0;
 	else
 		p->rf = i + 1;
@@ -54,6 +54,8 @@ int	init(t_set *s, char **str)
 
 	j = 0;
 	s->rules[4] = -1;
+	s->done = 0;
+	s->dead = 0;
 	while (str[++j])
 	{
 		i = -1;
@@ -61,6 +63,8 @@ int	init(t_set *s, char **str)
 			if (str[j][i] < '0' || str[j][i] > '9')
 				return (1);
 		s->rules[j - 1] = ft_atoi(str[j]);
+		if (s->rules[j - 1] < 0)
+			return (1);
 	}
 	return (setup(s));
 }
